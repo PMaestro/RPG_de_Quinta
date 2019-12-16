@@ -9,7 +9,8 @@ const userSchema = new Schema({
     }, 
     email:{
      type: String,
-     required:true,
+     //unique:true,
+     required:true
     },
     password:{
      type: String,
@@ -18,6 +19,9 @@ const userSchema = new Schema({
     description: String,
     imageUrl: String,
     admin: Boolean,
+    posts : [
+        {type: mongoose.Schema.Types.ObjectId,ref:'Post'}
+    ],
     createdAt:{
         type: Date,
         default: Date.now

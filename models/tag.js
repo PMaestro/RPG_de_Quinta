@@ -7,7 +7,10 @@ const tagSchema = new Schema({
         type: String,
         required: true
     },
-    descrition: String
+    description: String,
+    postsId:[
+        {type: mongoose.Schema.Types.ObjectId,ref:'Post'}
+    ]
 });
 
 module.exports = mongoose.model('Tag', tagSchema);
