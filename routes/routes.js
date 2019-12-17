@@ -19,9 +19,9 @@ routes.post('/user/Create', [
     body('password').trim().isLength({min:6})
  ], UserController.userCreate);
 
-routes.post('/user/update/:id',UserController.updateUser);
+routes.put('/user/update/:id',UserController.updateUser);
 
-routes.post('/user/delete', UserController.deleteUser);
+routes.delete('/user/delete', UserController.deleteUser);
 
 //Tag Routes
 routes.get('/tag', TagController.listAll);
@@ -30,9 +30,9 @@ routes.get('/tag/:id', TagController.findTag);
 
 routes.post('/tag/create',TagController.tagCreate);
 
-routes.post('/tag/update/:id', TagController.updateTag);
+routes.put('/tag/update/:id', TagController.updateTag);
 
-routes.post('/tag/delete', TagController.deleteTag);
+routes.delete('/tag/delete', TagController.deleteTag);
 
 //Post Routes
 routes.get('/post', PostController.listAll);
@@ -44,9 +44,12 @@ routes.post('/post/create',[
     body('text').trim().isLength({min:15})
 ] ,PostController.postCreate);
 
-routes.post('/post/update/:id', PostController.updatePost);
+routes.put('/post/update/:id',[
+    body('title').trim().isLength({min:8}),
+    body('text').trim().isLength({min:15})
+], PostController.updatePost);
 
-routes.post('/post/delete', PostController.deletePost);
+routes.delete('/post/delete', PostController.deletePost);
 
 
 module.exports = routes;
