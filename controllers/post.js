@@ -20,7 +20,7 @@ module.exports = {
             if (!err.statusCode) {
                 err.statusCode = 500;
             }
-            throw(err);
+            throw (err);
         }
     },
     async postCreate(req, res) {
@@ -28,7 +28,8 @@ module.exports = {
             const erros = validationResult(req);
             if (!erros.isEmpty()) {
                 return res.status(422).json({ message: "Erro de validação" });
-            } if (!req.file) {
+            }
+            if (!req.file) {
                 const error = new Error('Nenhuma imagem , entrada de dados incorretos');
                 error.statusCode = 422;
                 throw error;
@@ -41,15 +42,16 @@ module.exports = {
                 userId: req.body.userId,
                 tags: req.body.tags
             });
-            return res.json(post);
+            return res.status(201).json({ message: 'Post criado com sucesso!', post });
         } catch (err) {
             if (!err.statusCode) {
                 err.statusCode = 500;
             }
-            throw(err);
+            throw (err);
         }
     },
     async findPost(req, res) {
+        
         const post = await Post.findById(req.params.id).populate('tags');
         return res.json(post);
     },
@@ -96,7 +98,7 @@ module.exports = {
             if (!err.statusCode) {
                 err.statusCode = 500;
             }
-            throw(err);
+            throw (err);
         }
 
     },
@@ -117,7 +119,7 @@ module.exports = {
             if (!err.statusCode) {
                 err.statusCode = 500;
             }
-            throw(err);
+            throw (err);
         }
     },
 

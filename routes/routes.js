@@ -4,52 +4,53 @@ const routes = express.Router();
 const UserController = require('../controllers/user');
 const TagController = require('../controllers/tag');
 const PostController = require('../controllers/post');
+const isAuth = require('../util/is-auth');
 
 routes.get('/', (req, res, next) => {
     res.send('RPG de Quinta iniciado!');
 })
 //Users Routes
-routes.get('/user', UserController.listAll);
+routes.get('/user', isAuth,UserController.listAll);
 
-routes.get('/user/:id', UserController.findUser);
+routes.get('/user/:id', isAuth,UserController.findUser);
 
-routes.post('/user/Create', [
-    body('name').trim().isLength({min:4}),
+routes.post('/user/Create',isAuth ,[
+    body('name').trim().isLength({ min: 4 }),
     body('email').isEmail(),
-    body('password').trim().isLength({min:6})
- ], UserController.userCreate);
+    body('password').trim().isLength({ min: 6 })
+], UserController.userCreate);
 
-routes.put('/user/update/:id',UserController.updateUser);
+routes.put('/user/update/:id', isAuth,UserController.updateUser);
 
-routes.delete('/user/delete', UserController.deleteUser);
+routes.delete('/user/delete', isAuth,UserController.deleteUser);
 
 //Tag Routes
-routes.get('/tag', TagController.listAll);
+routes.get('/tag', isAuth, TagController.listAll);
 
-routes.get('/tag/:id', TagController.findTag);
+routes.get('/tag/:id', isAuth, TagController.findTag);
 
-routes.post('/tag/create',TagController.tagCreate);
+routes.post('/tag/create', isAuth, TagController.tagCreate);
 
-routes.put('/tag/update/:id', TagController.updateTag);
+routes.put('/tag/update/:id', isAuth, TagController.updateTag);
 
-routes.delete('/tag/delete', TagController.deleteTag);
+routes.delete('/tag/delete', isAuth, TagController.deleteTag);
 
 //Post Routes
-routes.get('/post', PostController.listAll);
+routes.get('/post', isAuth, PostController.listAll);
 
-routes.get('/post/:id', PostController.findPost);
+routes.get('/post/:id', isAuth, PostController.findPost);
 
-routes.post('/post/create',[
-    body('title').trim().isLength({min:8}),
-    body('text').trim().isLength({min:15})
-] ,PostController.postCreate);
+routes.post('/post/create', isAuth, [
+    body('title').trim().isLength({ min: 8 }),
+    body('text').trim().isLength({ min: 15 })
+], PostController.postCreate);
 
-routes.put('/post/update/:id',[
-    body('title').trim().isLength({min:8}),
-    body('text').trim().isLength({min:15})
+routes.put('/post/update/:id', isAuth, [
+    body('title').trim().isLength({ min: 8 }),
+    body('text').trim().isLength({ min: 15 })
 ], PostController.updatePost);
 
-routes.delete('/post/delete', PostController.deletePost);
+routes.delete('/post/delete', isAuth,PostController.deletePost);
 
 
 module.exports = routes;
